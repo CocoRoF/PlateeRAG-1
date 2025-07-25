@@ -368,20 +368,12 @@ const Documents: React.FC = () => {
             return;
         }
 
-        const fileArray = Array.from(files);
-        const validFiles = fileArray.filter(file => {
-            if (!isSupportedFileType(file)) {
-                setError(`지원되지 않는 파일 형식입니다: ${file.name}`);
-                return false;
-            }
-            if (!isValidFileSize(file, 50)) {
-                setError(`파일 크기가 50MB를 초과합니다: ${file.name}`);
-                return false;
-            }
-            return true;
-        });
+        const validFiles = Array.from(files).filter(file => isValidFileSize(file, 50000));
 
-        if (validFiles.length === 0) return;
+        if (validFiles.length === 0) {
+            setError('업로드할 파일이 없습니다.');
+            return;
+        }
 
         const initialProgress: UploadProgress[] = validFiles.map(file => ({
             fileName: file.name,
@@ -400,7 +392,7 @@ const Documents: React.FC = () => {
                 await uploadDocument(
                     file,
                     selectedCollection.collection_name,
-                    1000,
+                    1500,
                     200,
                     { upload_type: isFolder ? 'folder' : 'single' }
                 );

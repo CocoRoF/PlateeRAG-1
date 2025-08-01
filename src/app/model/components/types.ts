@@ -54,3 +54,31 @@ export type PopupState = {
       mode?: string;
     };
   };
+
+export interface ModelItem {
+  name: string;
+  base_model?: string;
+  training_method?: string;
+  commit_msg?: string;
+  user_name?: string;
+  use_deepspeed?: boolean;
+  use_peft?: boolean;
+  use_sfttrainer?: boolean;
+  use_stableadamw?: boolean;
+  use_flash_attention?: boolean;
+  [key: string]: any;
+}
+
+export interface DatasetItem {
+  name: string;
+  main_task?: string;
+  number_rows?: string;
+  description?: string;
+  user_name?: string;
+  default?: {
+    [key: string]: any;
+  };
+  [key: string]: any;
+}
+
+export type StoreItem = ModelItem | DatasetItem;
